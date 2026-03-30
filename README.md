@@ -1,9 +1,8 @@
-mod documents;
+# HTML document builder
 
-use crate::documents::Document;
-
-///
-/// 
+Can be used like...
+ 
+```rust
 fn main() {
     let css = std::fs::read_to_string("style.css").unwrap();
     let html = Document::new()
@@ -43,3 +42,4 @@ fn main() {
     std::fs::write("index.html", html).unwrap();
     // println!("{}", html);
 }
+```
