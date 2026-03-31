@@ -1,6 +1,6 @@
 use std::fmt::Display;
 
-use crate::documents::{ListBuilder, NodeBuilder};
+use crate::documents::{Element, ListBuilder, NodeBuilder, Tag};
 
 #[derive(Debug, Default)]
 pub struct Section(NodeBuilder);
@@ -10,27 +10,35 @@ impl Section {
         Self::default()
     }
     ///
+    /// Добавляем Html елемент
+    pub fn el<F>(self, t: Tag, build: F) -> Self 
+    where 
+        F: FnOnce(Element) -> Element 
+    {
+        Self(self.0.el(t, build))
+    }
+    ///
     /// Добавляем заголовок H1
-    pub fn add_h1(self, v: impl Display) -> Self {
-        Self(self.0.add_h1(v))
+    pub fn h1(self, v: impl Display) -> Self {
+        Self(self.0.h1(v))
     }
     ///
     /// Добавляем заголовок H2
-    pub fn add_h2(self, v: impl Display) -> Self {
-        Self(self.0.add_h2(v))
+    pub fn h2(self, v: impl Display) -> Self {
+        Self(self.0.h2(v))
     }
     ///
     /// Добавляем текст
-    pub fn add_text(self, v: impl Display) -> Self {
-        Self(self.0.add_text(v))
+    pub fn text(self, v: impl Display) -> Self {
+        Self(self.0.text(v))
     }
     ///
     /// Добавляем список без номерации
-    pub fn add_list<F>(self, build: F) -> Self 
+    pub fn list<F>(self, build: F) -> Self 
     where 
         F: FnOnce(ListBuilder) -> ListBuilder 
     {
-        Self(self.0.add_list(build))
+        Self(self.0.list(build))
     }
     ///
     /// Возвращает сформированный контент

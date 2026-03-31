@@ -10,7 +10,7 @@ impl ListBuilder {
     }
     ///
     /// Добавляем элемент списка
-    pub fn add_item(mut self, text: &str) -> Self {
+    pub fn item(mut self, text: &str) -> Self {
         self.content.push_str(&format!("  <li>{}</li>\n", text));
         self
     }

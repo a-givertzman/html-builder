@@ -1,6 +1,6 @@
 use std::fmt::{Display, Write};
 
-use crate::documents::ListBuilder;
+use crate::documents::{Element, ListBuilder, Tag};
 ///
 /// Implements all possible content
 #[derive(Debug, Default)]
@@ -13,26 +13,36 @@ impl NodeBuilder {
         Self::default()
     }
     ///
+    /// Добавляем Html елемент
+    pub fn el<F>(mut self, t: Tag, build: F) -> Self 
+    where 
+        F: FnOnce(Element) -> Element 
+    {
+        let el: Element = build(Element::new(t));
+        write!(self.content, "{}\n", el.build()).unwrap();
+        self
+    }
+    ///
     /// Добавляем заголовок H1
-    pub fn add_h1(mut self, v: impl Display) -> Self {
+    pub fn h1(mut self, v: impl Display) -> Self {
         write_tag(&mut self.content, "h1", v);
         self
     }
     ///
     /// Добавляем заголовок H2
-    pub fn add_h2(mut self, v: impl Display) -> Self {
+    pub fn h2(mut self, v: impl Display) -> Self {
         write_tag(&mut self.content, "h2", v);
         self
     }
     ///
     /// Добавляем текст
-    pub fn add_text(mut self, v: impl Display) -> Self {
+    pub fn text(mut self, v: impl Display) -> Self {
         write_tag(&mut self.content, "p", v);
         self
     }
     ///
     /// Добавляем список без номерации
-    pub fn add_list<F>(mut self, build: F) -> Self 
+    pub fn list<F>(mut self, build: F) -> Self 
     where 
         F: FnOnce(ListBuilder) -> ListBuilder 
     {
@@ -89,11 +99,4 @@ pub(super) fn write_escaped<W: Write>(o: &mut W, v: impl Display) {
 
     let mut escaper = Escaper { out: o };
     write!(escaper, "{}", v).unwrap();
-}
-///
-/// Writes formatted data into a buffer.
-macro_rules! w {
-    ($o:expr, $($t:tt)*) => {
-        write!($o, $($t)*).unwrap()
-    };
 }

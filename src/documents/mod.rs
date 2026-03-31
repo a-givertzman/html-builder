@@ -1,13 +1,17 @@
 mod document;
+mod element;
 mod footer;
 mod header;
 mod list;
 mod node_builder;
 mod section;
+mod tag;
 
 pub use document::*;
+pub use element::*;
 pub use footer::*;
 pub use header::*;
 pub use list::*;
 pub use node_builder::*;
 pub use section::*;
+pub use tag::*;

@@ -1,6 +1,6 @@
 use std::fmt::{Display, Write};
 
-use crate::documents::{Footer, Header, Section, write_escaped};
+use crate::documents::{Element, Footer, Header, Section, Tag, write_escaped};
 
 ///
 /// Writes formatted data into a buffer.
@@ -26,7 +26,7 @@ impl Document {
     }
     ///
     /// Добавляем титул документу
-    pub fn add_title(mut self, v: impl Display) -> Self {
+    pub fn title(mut self, v: impl Display) -> Self {
         let mut title = String::with_capacity(32);
         write_escaped(&mut title, v);
         self.title = title;
@@ -34,13 +34,23 @@ impl Document {
     }
     ///
     /// Добавляем css стили
-    pub fn add_style(mut self, css: impl Display) -> Self {
+    pub fn style(mut self, css: impl Display) -> Self {
         w!(self.styles, "{}\n", css);
         self
     }
     ///
+    /// Добавляем Html елемент
+    pub fn el<F>(mut self, t: Tag, build: F) -> Self 
+    where 
+        F: FnOnce(Element) -> Element 
+    {
+        let el: Element = build(Element::new(t));
+        write_escaped(&mut self.content, el.build());
+        self
+    }
+    ///
     /// Добавляем Header
-    pub fn add_header<F>(mut self, build: F) -> Self 
+    pub fn header<F>(mut self, build: F) -> Self 
     where 
         F: FnOnce(Header) -> Header 
     {
@@ -50,7 +60,7 @@ impl Document {
     }
     ///
     /// Добавляем секцию
-    pub fn add_section<F>(mut self, build: F) -> Self 
+    pub fn section<F>(mut self, build: F) -> Self 
     where 
         F: FnOnce(Section) -> Section 
     {
@@ -60,7 +70,7 @@ impl Document {
     }
     ///
     /// Добавляем footer
-    pub fn add_footer<F>(mut self, build: F) -> Self 
+    pub fn footer<F>(mut self, build: F) -> Self 
     where 
         F: FnOnce(Footer) -> Footer 
     {
