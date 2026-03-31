@@ -34,6 +34,7 @@ fn main() {
             )
             .h2(|el| el.text("Key Highlights"))
             .list(|list| list
+                .class("general-list")
                 .item("System uptime: 99.98%")
                 .item("Average response time reduced by 12%")
                 .item("No critical incidents reported")

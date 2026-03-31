@@ -1,18 +1,38 @@
 use std::fmt::{Display, Write};
 
-use crate::documents::{Element, Tag};
+use crate::documents::{Element, Tag, write_escaped};
 
 ///
 /// Simple Html list
 pub struct ListBuilder {
+    id: String,
+    classes: String,
     content: Vec<Child>,
 }
 //
 impl ListBuilder {
     pub fn new() -> Self {
         Self {
+            id: String::new(),
+            classes: String::new(),
             content: vec![],
         }
+    }
+    ///
+    /// Set Id to the Html element
+    pub fn id(mut self, v: impl Display) -> Self {
+        self.id.clear();
+        write_escaped(&mut self.id, v);
+        self
+    }
+    ///
+    /// Add class to the Html element
+    pub fn class(mut self, v: impl Display) -> Self {
+        if !self.classes.is_empty() {
+            write!(self.classes, " ").unwrap();
+        }
+        write_escaped(&mut self.classes, v);
+        self
     }
     ///
     /// Добавляем Html елемент
@@ -34,6 +54,12 @@ impl ListBuilder {
     /// 
     pub fn build(self) -> String {
         let mut out = String::with_capacity(32);
+        if !self.id.is_empty() {
+            write!(out, " id=\"{}\"", self.id).unwrap();
+        }
+        if !self.classes.is_empty() {
+            write!(out, " class=\"{}\"", self.classes).unwrap();
+        }
         for child in self.content {
             let text = match child {
                 Child::Text(t) => t,
