@@ -75,7 +75,7 @@ impl Element {
                     Child::Text(t) => t,
                     Child::El(el) => el.build(),
                 };
-                write_escaped(&mut out, text);
+                write!(out, "{text}").unwrap();
             }
             write!(out, "/>").unwrap();
         } else {
@@ -85,7 +85,7 @@ impl Element {
                     Child::Text(t) => t,
                     Child::El(el) => el.build(),
                 };
-                write_escaped(&mut out, text);
+                write!(out, "{text}").unwrap();
             }
             write!(out, "</{}>\n", self.tag).unwrap();
         }
