@@ -54,12 +54,14 @@ impl ListBuilder {
     /// 
     pub fn build(self) -> String {
         let mut out = String::with_capacity(32);
+        write!(out, "<ul").unwrap();
         if !self.id.is_empty() {
             write!(out, " id=\"{}\"", self.id).unwrap();
         }
         if !self.classes.is_empty() {
             write!(out, " class=\"{}\"", self.classes).unwrap();
         }
+        write!(out, ">").unwrap();
         for child in self.content {
             let text = match child {
                 Child::Text(t) => t,
@@ -67,6 +69,7 @@ impl ListBuilder {
             };
             write!(out, "  <li>{}</li>\n", text).unwrap();
         }
+        write!(out, "</ul>\n").unwrap();
         out
     }
 }
