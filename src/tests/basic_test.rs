@@ -1,7 +1,7 @@
 use debugging::session::debug_session::{DebugSession, LogLevel};
 use sal_core::dbg::Dbg;
 
-use crate::{documents::{Document, br, button, div, form, h2, h4, label, strong, table, tbody, td, textarea, th, thead, tr}, img, svg, tests::chart};
+use crate::{colspan, documents::{Document, br, button, div, form, h2, h4, label, strong, table, tbody, td, textarea, th, thead, tr}, img, svg, tests::chart};
 ///
 /// Testing all basic functioms of the html builder
 #[test]
@@ -14,6 +14,7 @@ fn basic() {
         .title("Monthly Report")
         .style(css)
         .header(|header| header
+            .class("main-header")
             .h1(|el| el
                 .class("main-title")
                 .text("📊 Monthly Performance Report")
@@ -68,22 +69,70 @@ fn basic() {
                 .class("metrics-table")
                 .el(thead(), |el| el
                     .el(tr(), |el| el
-                        .el(th(), |el| el.text("Metric"))
-                        .el(th(), |el| el.text("Value"))
+                        // Общий заголовок «Система», объединяет 3 столбца
+                        .el(th(), |el| el
+                            .attr(colspan(), "3")
+                            .class("th-center")
+                            .text("System Performance")
+                        )
+                        // Общий заголовок «Пользователи», объединяет 2 столбца
+                        .el(th(), |el| el
+                            .attr(colspan(), "2")
+                            .class("th-center")
+                            .text("User Activity")
+                        )
+                    )
+                    .el(tr(), |el| el
+                        // Конкретные метрики во второй строке
+                        .el(th(), |el| el.text("Uptime (%)"))
+                        .el(th(), |el| el.text("Latency (ms)"))
+                        .el(th(), |el| el.text("Errors"))
+                        .el(th(), |el| el.text("Active Users"))
+                        .el(th(), |el| el.text("New Registrations"))
                     )
                 )
                 .el(tbody(), |el| el
                     .el(tr(), |el| el
-                        .el(td(), |el| el.text("Uptime"))
-                        .el(td(), |el| el.text("99.98%"))
+                        .el(td(), |el| el.text("99.98"))
+                        .el(td(), |el| el.text("120"))
+                        .el(td(), |el| el.text("2"))
+                        .el(td(), |el| el.text("1,450"))
+                        .el(td(), |el| el.text("48"))
                     )
                     .el(tr(), |el| el
-                        .el(td(), |el| el.text("Latency"))
-                        .el(td(), |el| el.text("120ms"))
+                        .el(td(), |el| el.text("99.95"))
+                        .el(td(), |el| el.text("135"))
+                        .el(td(), |el| el.text("5"))
+                        .el(td(), |el| el.text("1,380"))
+                        .el(td(), |el| el.text("32"))
                     )
                 )
             )
         )
+
+        // .section(|section| section
+        //     .class("section-3")
+        //     .h2(|el| el.text("Detailed Metrics"))
+        //     .el(table(), |el| el
+        //         .class("metrics-table")
+        //         .el(thead(), |el| el
+        //             .el(tr(), |el| el
+        //                 .el(th(), |el| el.text("Metric"))
+        //                 .el(th(), |el| el.text("Value"))
+        //             )
+        //         )
+        //         .el(tbody(), |el| el
+        //             .el(tr(), |el| el
+        //                 .el(td(), |el| el.text("Uptime"))
+        //                 .el(td(), |el| el.text("99.98%"))
+        //             )
+        //             .el(tr(), |el| el
+        //                 .el(td(), |el| el.text("Latency"))
+        //                 .el(td(), |el| el.text("120ms"))
+        //             )
+        //         )
+        //     )
+        // )
         // --- SECTION 4 ---
         .section(|section| section
             .class("section-4")
@@ -114,12 +163,14 @@ fn basic() {
             .class("section-6")
             .h2(|el| el.text("Quick Feedback"))
             .el(form(), |el| el
+                .id("feedback-form")
                 .class("feedback-form")
                 .el(label(), |el| el
                     .text("Your feedback:")
                 )
                 .el(br(), |el| el)
                 .el(textarea(), |el| el
+                    .id("feedback")
                     .class("input")
                 )
                 .el(br(), |el| el)
@@ -130,6 +181,7 @@ fn basic() {
             )
         )
         .footer(|footer| footer
+            .class("main-footer")
             .text(|el| el
                 .class("footer-text")
                 .text("© 2026 Internal System • All rights reserved")

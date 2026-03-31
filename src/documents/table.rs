@@ -7,7 +7,8 @@ use crate::documents::{Element, Tag, write_escaped};
 pub struct TableBuilder {
     id: String,
     classes: String,
-    content: Vec<Child>,
+    header: Vec<Child>,
+    rows: Vec<Child>,
 }
 //
 impl TableBuilder {
@@ -15,7 +16,8 @@ impl TableBuilder {
         Self {
             id: String::new(),
             classes: String::new(),
-            content: vec![],
+            header: vec![],
+            rows: vec![],
         }
     }
     ///
@@ -34,27 +36,32 @@ impl TableBuilder {
         write_escaped(&mut self.classes, v);
         self
     }
+    // ///
+    // /// Добавляем Html елемент
+    // pub fn el<F>(mut self, t: Tag, build: F) -> Self 
+    // where 
+    //     F: FnOnce(Element) -> Element 
+    // {
+    //     let el: Element = build(Element::new(t));
+    //     self.content.push(Child::El(el));
+    //     self
+    // }
     ///
-    /// Добавляем Html елемент
-    pub fn el<F>(mut self, t: Tag, build: F) -> Self 
-    where 
-        F: FnOnce(Element) -> Element 
-    {
-        let el: Element = build(Element::new(t));
-        self.content.push(Child::El(el));
+    /// Добавляем шапку таблицы
+    pub fn header(mut self, text: impl Display) -> Self {
+        self.header.push(Child::Text(text.to_string()));
         self
     }
-    ///
-    /// Добавляем элемент списка
-    pub fn item(mut self, text: impl Display) -> Self {
-        self.content.push(Child::Text(text.to_string()));
+    /// Добавляем строку таблицы
+    pub fn row(mut self, text: impl Display) -> Self {
+        self.rows.push(Child::Text(text.to_string()));
         self
     }
     ///
     /// 
     pub fn build(self) -> String {
         let mut out = String::with_capacity(32);
-        write!(out, "<ul").unwrap();
+        write!(out, "<table").unwrap();
         if !self.id.is_empty() {
             write!(out, " id=\"{}\"", self.id).unwrap();
         }
@@ -62,14 +69,14 @@ impl TableBuilder {
             write!(out, " class=\"{}\"", self.classes).unwrap();
         }
         write!(out, ">").unwrap();
-        for child in self.content {
+        for child in self.rows {
             let text = match child {
                 Child::Text(t) => t,
                 Child::El(el) => el.build(),
             };
             write!(out, "  <li>{}</li>", text).unwrap();
         }
-        write!(out, "</ul>").unwrap();
+        write!(out, "</table>").unwrap();
         out
     }
 }

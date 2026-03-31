@@ -1,3 +1,5 @@
+use std::fmt::Display;
+
 use crate::documents::{Element, ListBuilder, NodeBuilder, Tag};
 
 #[derive(Debug, Default)]
@@ -6,6 +8,11 @@ pub struct Footer(NodeBuilder);
 impl Footer {
     pub fn new() -> Self {
         Self::default()
+    }
+    ///
+    /// Add class to the Html element
+    pub fn class(self, v: impl Display) -> Self {
+        Self(self.0.class(v))
     }
     ///
     /// Добавляем Html елемент
@@ -49,12 +56,12 @@ impl Footer {
     }
     ///
     /// Возвращает Id 
-    pub fn id(&self) -> &str {
+    pub(super) fn id(&self) -> &str {
         &self.0.id
     }
     ///
     /// Возвращает classes
-    pub fn classes(&self) -> &str {
+    pub(super) fn classes(&self) -> &str {
         &self.0.classes
     }
     ///

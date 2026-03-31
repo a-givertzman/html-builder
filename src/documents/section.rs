@@ -56,12 +56,12 @@ impl Section {
     }
     ///
     /// Возвращает Id 
-    pub fn id(&self) -> &str {
+    pub(super) fn id(&self) -> &str {
         &self.0.id
     }
     ///
     /// Возвращает classes
-    pub fn classes(&self) -> &str {
+    pub(super) fn classes(&self) -> &str {
         &self.0.classes
     }
     ///

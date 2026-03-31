@@ -139,6 +139,10 @@ li {
 .metrics-table th {
     font-weight: 600;
 }
+.metrics-table .th-center {
+    text-align: center;
+    vertical-align: middle; /* вертикальное выравнивание по центру */
+}
 
 .metrics-table tbody tr {
     border-top: 1px solid #e5e7eb;
@@ -160,6 +164,7 @@ li {
     resize: vertical;
     margin-top: 6px;
     margin-bottom: 10px;
+    box-sizing: border-box;
 }
 
 /* кнопка */

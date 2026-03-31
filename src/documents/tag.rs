@@ -18,7 +18,7 @@ impl Debug for Tag {
     }
 }
 ///
-/// Macro defines short methods to construct all tags
+/// Macro defines short methods to construct all [Tag]s
 /// pub fn p()  -> Tag { Tag { name: "p" } }
 /// pub fn h1() -> Tag { Tag { name: "h1" } }
 /// pub fn h2() -> Tag { Tag { name: "h2" } }

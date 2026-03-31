@@ -1,3 +1,4 @@
+mod attribute;
 mod document;
 mod element;
 mod footer;
@@ -8,6 +9,7 @@ mod section;
 mod table;
 mod tag;
 
+pub use attribute::*;
 pub use document::*;
 pub use element::*;
 pub use footer::*;

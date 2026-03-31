@@ -1,6 +1,6 @@
 use std::fmt::{Display, Write};
 
-use crate::documents::{Tag, write_escaped};
+use crate::{Attribute, documents::{Tag, write_escaped}};
 
 ///
 /// Atomic Html element builder
@@ -9,6 +9,7 @@ pub struct Element {
     tag: Tag,
     id: String,
     classes: String,
+    attrs: String,
     child: Vec<Child>,
 }
 //
@@ -20,6 +21,7 @@ impl Element {
             tag: t,
             id: String::new(),
             classes: String::new(),
+            attrs: String::new(),
             child: vec![],
         }
     }
@@ -54,6 +56,23 @@ impl Element {
         self
     }
     ///
+    /// Add attribute to the Html element
+    pub fn attr(mut self, attr: Attribute, value: impl Display) -> Self {
+        if !self.attrs.is_empty() {
+            write!(self.attrs, " ").unwrap();
+        }
+    
+        if attr.is_flag {
+            write!(self.attrs, "{}", attr).unwrap();
+        } else {
+            write!(self.attrs, "{}=\"", attr).unwrap();
+            write_escaped(&mut self.attrs, value);
+            write!(self.attrs, "\"").unwrap();
+        }
+    
+        self
+    }
+    ///
     /// Add text to the html element 
     pub fn text(mut self, v: impl Display) -> Self {
         let mut text = String::with_capacity(32);
@@ -77,6 +96,9 @@ impl Element {
         }
         if !self.classes.is_empty() {
             write!(out, " class=\"{}\"", self.classes).unwrap();
+        }
+        if !self.attrs.is_empty() {
+            write!(out, " class=\"{}\"", self.attrs).unwrap();
         }
         if self.tag.is_void {
             for child in self.child {
