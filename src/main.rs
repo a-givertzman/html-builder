@@ -1,6 +1,6 @@
 mod documents;
 
-use crate::documents::{Document, br, div, h2};
+use crate::documents::{Document, br, div, h2, h3, h4, h6, p};
 
 ///
 /// 
@@ -10,8 +10,8 @@ fn main() {
         .title("Monthly Report")
         .style(css)
         .header(|header| header
-            .h1("📊 Monthly Performance Report")
-            .text("Generated automatically by internal system")
+            .h1(|el| el.text("📊 Monthly Performance Report"))
+            .text(|el| el.text("Generated automatically by internal system"))
         )
         .section(|section| section
             .el(h2(), |el| el
@@ -20,10 +20,10 @@ fn main() {
                 .text("Overview")
                 .text("Overview")
             )
-            .h2("Overview")
-            .text("This report summarizes key metrics and system performance for the current period.")
+            .h2(|el| el.text("Overview"))
+            .text(|el| el.text("This report summarizes key metrics and system performance for the current period."))
             .el(br(), |el| el)
-            .text("All values are aggregated and validated against the latest available data.")
+            .text(|el| el.text("All values are aggregated and validated against the latest available data."))
         )
         .section(|section| section
             .el(div(), |el| el
@@ -32,7 +32,7 @@ fn main() {
                     .text("Key Highlights")
                 )
             )
-            .h2("Key Highlights")
+            .h2(|el| el.text("Key Highlights"))
             .list(|list| list
                 .item("System uptime: 99.98%")
                 .item("Average response time reduced by 12%")
@@ -40,16 +40,16 @@ fn main() {
             )
         )
         .section(|section| section
-            .h2("Next Steps")
-            .text("Focus will be placed on improving edge-case handling and further reducing latency.")
+            .h2(|el| el.text("Next Steps"))
+            .text(|el| el.text("Focus will be placed on improving edge-case handling and further reducing latency."))
             .list(|list| list
-                .item("Optimize database queries")
-                .item("Extend monitoring coverage")
-                .item("Improve alerting system")
+                .el(h4(), |el| el.text("Optimize database queries"))
+                .el(h4(), |el| el.text("Extend monitoring coverage"))
+                .el(h4(), |el| el.text("Improve alerting system"))
             )
         )
         .footer(|footer| footer
-            .text("© 2026 Internal System • All rights reserved")
+            .text(|el| el.text("© 2026 Internal System • All rights reserved"))
         )
         .build();
     std::fs::File::create("index.html").unwrap();

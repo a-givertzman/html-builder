@@ -29,12 +29,16 @@ impl Element {
     where 
         F: FnOnce(Element) -> Element 
     {
+        if self.tag.is_void {
+            log::warn!("Element.el | Void tag '{}' can't have children", self.tag);
+            return self;
+        }
         let el: Element = build(Element::new(t));
         self.child.push(Child::El(el));
         self
     }
     ///
-    /// Add class to the Html element
+    /// Set Id to the Html element
     pub fn id(mut self, v: impl Display) -> Self {
         self.id.clear();
         write_escaped(&mut self.id, v);
@@ -93,7 +97,7 @@ impl Element {
     }
 }
 ///
-/// Child innet variants
+/// Child variants
 #[derive(Debug)]
 enum Child {
     Text(String),

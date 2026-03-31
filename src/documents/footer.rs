@@ -1,6 +1,4 @@
-use std::fmt::Display;
-
-use crate::documents::{Element, ListBuilder, NodeBuilder, Tag, write_escaped};
+use crate::documents::{Element, ListBuilder, NodeBuilder, Tag};
 
 #[derive(Debug, Default)]
 pub struct Footer(NodeBuilder);
@@ -19,18 +17,27 @@ impl Footer {
     }
     ///
     /// Добавляем заголовок H1
-    pub fn h1(self, v: &str) -> Self {
-        Self(self.0.h1(v))
+    pub fn h1<F>(self, build: F) -> Self
+    where
+        F: FnOnce(Element) -> Element
+    {
+        Self(self.0.h1(build))
     }
     ///
     /// Добавляем заголовок H2
-    pub fn h2(self, v: &str) -> Self {
-        Self(self.0.h2(v))
+    pub fn h2<F>(self, build: F) -> Self
+    where
+        F: FnOnce(Element) -> Element
+    {
+        Self(self.0.h2(build))
     }
     ///
     /// Добавляем текст
-    pub fn text(self, v: impl Display) -> Self {
-        Self(self.0.text(v))
+    pub fn text<F>(self, build: F) -> Self
+    where
+        F: FnOnce(Element) -> Element
+    {
+        Self(self.0.text(build))
     }
     ///
     /// Добавляем список без номерации

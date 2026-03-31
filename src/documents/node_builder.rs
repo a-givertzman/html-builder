@@ -1,6 +1,6 @@
 use std::fmt::{Display, Write};
 
-use crate::documents::{Element, ListBuilder, Tag};
+use crate::documents::{Element, ListBuilder, Tag, h1, h2, p};
 ///
 /// Implements all possible content
 #[derive(Debug, Default)]
@@ -19,26 +19,32 @@ impl NodeBuilder {
         F: FnOnce(Element) -> Element 
     {
         let el: Element = build(Element::new(t));
-        write!(self.content, "{}\n", el.build()).unwrap();
+        write!(self.content, "{}", el.build()).unwrap();
         self
     }
     ///
     /// Добавляем заголовок H1
-    pub fn h1(mut self, v: impl Display) -> Self {
-        write_tag(&mut self.content, "h1", v);
-        self
+    pub fn h1<F>(self, build: F) -> Self
+    where
+        F: FnOnce(Element) -> Element
+    {
+        self.el(h1(), build)
     }
     ///
     /// Добавляем заголовок H2
-    pub fn h2(mut self, v: impl Display) -> Self {
-        write_tag(&mut self.content, "h2", v);
-        self
+    pub fn h2<F>(self, build: F) -> Self
+    where
+        F: FnOnce(Element) -> Element
+    {
+        self.el(h2(), build)
     }
     ///
     /// Добавляем текст
-    pub fn text(mut self, v: impl Display) -> Self {
-        write_tag(&mut self.content, "p", v);
-        self
+    pub fn text<F>(self, build: F) -> Self
+    where
+        F: FnOnce(Element) -> Element
+    {
+        self.el(p(), build)
     }
     ///
     /// Добавляем список без номерации
