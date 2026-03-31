@@ -1,8 +1,11 @@
-mod documents;
-use crate::documents::{Document, br, button, div, form, h2, h3, h4, h6, label, p, strong, table, tbody, td, textarea, th, thead, tr};
+use debugging::session::debug_session::{DebugSession, LogLevel};
+
+use crate::documents::{Document, br, button, div, form, h2, h4, label, strong, table, tbody, td, textarea, th, thead, tr};
 ///
-/// 
-fn main() {
+/// Testing all basic functioms of the html builder
+#[test]
+fn basic() {
+    DebugSession::new().filter(LogLevel::Debug).init();
     let css = std::fs::read_to_string("style.css").unwrap();
     let html = Document::new()
         .title("Monthly Report")
