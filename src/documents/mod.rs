@@ -5,6 +5,7 @@ mod header;
 mod list;
 mod node_builder;
 mod section;
+mod table;
 mod tag;
 
 pub use document::*;
@@ -14,4 +15,5 @@ pub use header::*;
 pub use list::*;
 pub use node_builder::*;
 pub use section::*;
+pub use table::*;
 pub use tag::*;

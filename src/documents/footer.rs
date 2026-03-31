@@ -48,6 +48,16 @@ impl Footer {
         Footer(self.0.list(build))
     }
     ///
+    /// Возвращает Id 
+    pub fn id(&self) -> &str {
+        &self.0.id
+    }
+    ///
+    /// Возвращает classes
+    pub fn classes(&self) -> &str {
+        &self.0.classes
+    }
+    ///
     /// Возвращает сформированный контент
     pub fn build(self) -> String {
         self.0.build()

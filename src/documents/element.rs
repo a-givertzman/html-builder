@@ -59,7 +59,12 @@ impl Element {
         let mut text = String::with_capacity(32);
         write_escaped(&mut text, v);
         self.child.push(Child::Text(text));
-
+        self
+    }
+    ///
+    /// Add raw text to the html element 
+    pub fn raw(mut self, v: impl Display) -> Self {
+        self.child.push(Child::Text(v.to_string()));
         self
     }
     ///

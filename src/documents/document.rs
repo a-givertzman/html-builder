@@ -55,7 +55,14 @@ impl Document {
         F: FnOnce(Header) -> Header 
     {
         let header: Header = build(Header::new());
-        w!(self.header, "<header>{}</header>", header.build());
+        w!(self.header, "<header");
+        if !header.id().is_empty() {
+            w!(self.header, " id=\"{}\"", header.id());
+        }
+        if !header.classes().is_empty() {
+            w!(self.header, " class=\"{}\"", header.classes());
+        }
+        w!(self.header, ">{}</header>", header.build());
         self
     }
     ///
@@ -65,7 +72,14 @@ impl Document {
         F: FnOnce(Section) -> Section 
     {
         let section: Section = build(Section::new());
-        w!(self.content, "<section>{}</section>", section.build());
+        w!(self.content, "<section");
+        if !section.id().is_empty() {
+            w!(self.content, " id=\"{}\"", section.id());
+        }
+        if !section.classes().is_empty() {
+            w!(self.content, " class=\"{}\"", section.classes());
+        }
+        w!(self.content, ">{}</section>", section.build());
         self
     }
     ///
@@ -75,7 +89,14 @@ impl Document {
         F: FnOnce(Footer) -> Footer 
     {
         let footer: Footer = build(Footer::new());
-        w!(self.footer, "<footer>{}</footer>", footer.build());
+        w!(self.footer, "<footer");
+        if !footer.id().is_empty() {
+            w!(self.footer, " id=\"{}\"", footer.id());
+        }
+        if !footer.classes().is_empty() {
+            w!(self.footer, " class=\"{}\"", footer.classes());
+        }
+        w!(self.footer, ">{}</footer>", footer.build());
         self
     }
     ///

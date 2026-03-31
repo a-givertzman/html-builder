@@ -176,3 +176,71 @@ li {
 .btn:hover {
     background: #1d4ed8;
 }
+/* --- section variations --- */
+
+/* SECTION 1 — overview (нейтральный, акцент на note) */
+.section-1 {
+    border-left: 4px solid #3b82f6;
+}
+
+/* SECTION 2 — highlights (зелёный акцент) */
+.section-2 {
+    border-left: 4px solid #10b981;
+}
+
+.section-2 h2 {
+    color: #065f46;
+}
+
+/* SECTION 3 — metrics (более строгий, "табличный") */
+.section-3 {
+    border-left: 4px solid #6366f1;
+}
+
+.section-3 h2 {
+    color: #3730a3;
+}
+
+/* SECTION 4 — next steps (оранжевый / roadmap) */
+.section-4 {
+    border-left: 4px solid #f59e0b;
+}
+
+.section-4 h2 {
+    color: #92400e;
+}
+
+/* SECTION 5 — feedback (фиолетовый / интерактив) */
+.section-5 {
+    border-left: 4px solid #8b5cf6;
+}
+
+.section-5 h2 {
+    color: #5b21b6;
+}
+
+/* SECTION 5 — feedback (фиолетовый / интерактив) */
+.section-6 {
+    border-left: 4px solid #f65c5c;
+}
+
+.section-6 h2 {
+    color: #f65c5c;
+}
+
+/* --- небольшие UX улучшения --- */
+
+/* hover для секций */
+section:hover {
+    box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+    transition: box-shadow 0.2s ease;
+}
+
+/* плавность кнопки */
+.btn {
+    transition: background 0.15s ease, transform 0.05s ease;
+}
+
+.btn:active {
+    transform: translateY(1px);
+}

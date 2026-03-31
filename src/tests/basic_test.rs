@@ -1,7 +1,7 @@
 use debugging::session::debug_session::{DebugSession, LogLevel};
 use sal_core::dbg::Dbg;
 
-use crate::documents::{Document, br, button, div, form, h2, h4, label, strong, table, tbody, td, textarea, th, thead, tr};
+use crate::{documents::{Document, br, button, div, form, h2, h4, label, strong, table, tbody, td, textarea, th, thead, tr}, img, svg, tests::chart};
 ///
 /// Testing all basic functioms of the html builder
 #[test]
@@ -25,6 +25,7 @@ fn basic() {
         )
         // --- SECTION 1 ---
         .section(|section| section
+            .class("section-1")
             .el(div(), |el| el
                 .id("section-1")
                 .class("card")
@@ -45,6 +46,7 @@ fn basic() {
         )
         // --- SECTION 2 ---
         .section(|section| section
+            .class("section-2")
             .h2(|el| el.text("Key Highlights"))
             .list(|list| list
                 .class("general-list")
@@ -60,6 +62,7 @@ fn basic() {
         )
         // --- SECTION 3 ---
         .section(|section| section
+            .class("section-3")
             .h2(|el| el.text("Detailed Metrics"))
             .el(table(), |el| el
                 .class("metrics-table")
@@ -83,6 +86,14 @@ fn basic() {
         )
         // --- SECTION 4 ---
         .section(|section| section
+            .class("section-4")
+            .el(div(), |div| div
+                .raw(chart::draw())
+            )
+        )
+        // --- SECTION 5 ---
+        .section(|section| section
+            .class("section-5")
             .h2(|el| el.text("Next Steps"))
             .text(|el| el.text("Focus areas for the next iteration:"))
             .list(|list| list
@@ -98,8 +109,9 @@ fn basic() {
                 )
             )
         )
-        // --- SECTION 5 (формы + void) ---
+        // --- SECTION 6 (формы + void) ---
         .section(|section| section
+            .class("section-6")
             .h2(|el| el.text("Quick Feedback"))
             .el(form(), |el| el
                 .class("feedback-form")

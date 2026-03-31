@@ -1,3 +1,5 @@
+use std::fmt::Display;
+
 use crate::documents::{Element, ListBuilder, NodeBuilder, Tag};
 
 #[derive(Debug, Default)]
@@ -6,6 +8,11 @@ pub struct Section(NodeBuilder);
 impl Section {
     pub fn new() -> Self {
         Self::default()
+    }
+    ///
+    /// Add class to the Html element
+    pub fn class(self, v: impl Display) -> Self {
+        Self(self.0.class(v))
     }
     ///
     /// Добавляем Html елемент
@@ -46,6 +53,16 @@ impl Section {
         F: FnOnce(ListBuilder) -> ListBuilder 
     {
         Self(self.0.list(build))
+    }
+    ///
+    /// Возвращает Id 
+    pub fn id(&self) -> &str {
+        &self.0.id
+    }
+    ///
+    /// Возвращает classes
+    pub fn classes(&self) -> &str {
+        &self.0.classes
     }
     ///
     /// Возвращает сформированный контент

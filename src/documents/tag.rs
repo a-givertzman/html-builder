@@ -70,6 +70,8 @@ define_tags! {
     // ссылки / медиа
     a => ("a", false, "Hyperlink"),
     img => ("img", true, "Image (self-closing)"),
+    svg => ("svg", false, "SVG (Scalable Vector Graphics)"),
+
 
     // таблицы
     table => ("table", false, "Table container"),

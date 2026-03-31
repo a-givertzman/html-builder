@@ -5,12 +5,23 @@ use crate::documents::{Element, ListBuilder, Tag, h1, h2, p};
 /// Implements all possible content
 #[derive(Debug, Default)]
 pub struct NodeBuilder {
+    pub(super) id: String,
+    pub(super) classes: String,
     content: String,
 }
 //
 impl NodeBuilder {
     pub fn new() -> Self {
         Self::default()
+    }
+    ///
+    /// Add class to the Html element
+    pub fn class(mut self, v: impl Display) -> Self {
+        if !self.classes.is_empty() {
+            write!(self.classes, " ").unwrap();
+        }
+        write_escaped(&mut self.classes, v);
+        self
     }
     ///
     /// Добавляем Html елемент
