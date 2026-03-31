@@ -7,6 +7,7 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <title>Monthly Report</title>
     <style>
+        /* --- base --- */
         body {
             margin: 0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -14,6 +15,7 @@
             color: #1f2933;
         }
 
+        /* --- layout --- */
         header,
         footer {
             background: #111827;
@@ -27,14 +29,21 @@
             padding: 0 16px;
         }
 
+        /* --- sections --- */
         section {
             background: #ffffff;
-            border-radius: 8px;
-            padding: 20px;
+            border-radius: 10px;
+            padding: 20px 22px;
             margin-bottom: 20px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
         }
 
+        /* card (используется в section-1) */
+        .card {
+            padding: 16px;
+        }
+
+        /* --- typography --- */
         h1 {
             margin: 0;
             font-size: 24px;
@@ -42,20 +51,140 @@
 
         h2 {
             margin-top: 0;
+            margin-bottom: 12px;
             color: #111827;
         }
 
+        h4 {
+            margin: 6px 0;
+            font-size: 14px;
+        }
+
+        /* текст */
         p {
             line-height: 1.6;
             color: #4b5563;
+            margin: 8px 0;
         }
 
+        /* --- header --- */
+        .main-title {
+            font-weight: 600;
+        }
+
+        .subtitle {
+            font-size: 13px;
+            opacity: 0.8;
+        }
+
+        /* --- footer --- */
+        .footer-text {
+            font-size: 13px;
+            text-align: center;
+            opacity: 0.8;
+        }
+
+        /* --- lists --- */
         ul {
             padding-left: 20px;
+            margin: 10px 0;
         }
 
         li {
             margin-bottom: 6px;
+        }
+
+        /* кастомный список */
+        .general-list {
+            list-style-type: disc;
+        }
+
+        .general-list .highlight {
+            color: #065f46;
+            font-weight: 500;
+        }
+
+        /* вложенные элементы списка */
+        .list-item {
+            font-weight: 500;
+            color: #1f2933;
+        }
+
+        /* --- section headers --- */
+        .section-header {
+            font-weight: 600;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 6px;
+            margin-bottom: 12px;
+        }
+
+        /* --- note box --- */
+        .note-box {
+            margin-top: 12px;
+            padding: 10px 12px;
+            border-left: 4px solid #3b82f6;
+            background: #eff6ff;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        /* --- table --- */
+        .metrics-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+            font-size: 14px;
+        }
+
+        .metrics-table th,
+        .metrics-table td {
+            text-align: left;
+            padding: 8px 10px;
+        }
+
+        .metrics-table thead {
+            background: #f1f5f9;
+        }
+
+        .metrics-table th {
+            font-weight: 600;
+        }
+
+        .metrics-table tbody tr {
+            border-top: 1px solid #e5e7eb;
+        }
+
+        /* --- form --- */
+        .feedback-form {
+            margin-top: 10px;
+        }
+
+        .input {
+            width: 100%;
+            min-height: 80px;
+            padding: 8px 10px;
+            border-radius: 6px;
+            border: 1px solid #d1d5db;
+            font-family: inherit;
+            font-size: 14px;
+            resize: vertical;
+            margin-top: 6px;
+            margin-bottom: 10px;
+        }
+
+        /* кнопка */
+        .btn {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn:hover {
+            background: #1d4ed8;
         }
     </style>
 </head>
