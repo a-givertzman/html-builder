@@ -1,4 +1,5 @@
 use debugging::session::debug_session::{DebugSession, LogLevel};
+use sal_core::dbg::Dbg;
 
 use crate::documents::{Document, br, button, div, form, h2, h4, label, strong, table, tbody, td, textarea, th, thead, tr};
 ///
@@ -7,6 +8,8 @@ use crate::documents::{Document, br, button, div, form, h2, h4, label, strong, t
 fn basic() {
     DebugSession::new().filter(LogLevel::Debug).init();
     let css = std::fs::read_to_string("style.css").unwrap();
+    let dbg = Dbg::own("basic-test");
+    log::debug!("{dbg} | css loaded from 'style.css'");
     let html = Document::new()
         .title("Monthly Report")
         .style(css)
@@ -122,4 +125,6 @@ fn basic() {
         )
         .build();
     std::fs::write("index.html", html).unwrap();
+    log::debug!("{dbg} | Result html stored into 'index.html'");
+    log::debug!("{dbg} | All done");
 }

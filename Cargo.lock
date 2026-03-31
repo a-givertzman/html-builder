@@ -62,6 +62,26 @@ dependencies = [
 ]
 
 [[package]]
+name = "bincode"
+version = "2.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "36eaf5d7b090263e8150820482d5d93cd964a81e4019913c972f4edcc6edb740"
+dependencies = [
+ "bincode_derive",
+ "serde",
+ "unty",
+]
+
+[[package]]
+name = "bincode_derive"
+version = "2.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "bf95709a440f45e986983918d0e8a1f30a9b1df04918fc828670606804ac3c09"
+dependencies = [
+ "virtue",
+]
+
+[[package]]
 name = "cfg-if"
 version = "1.0.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -72,6 +92,14 @@ name = "colorchoice"
 version = "1.0.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1d07550c9036bf2ae0c684c4297d503f838287c83c53686d05370d0e139ae570"
+
+[[package]]
+name = "debugging"
+version = "0.0.1"
+source = "git+https://github.com/a-givertzman/rust-debuging.git?tag=0.0.1#18c3318af218aa8caa094a7dfda0d71f08a9eeda"
+dependencies = [
+ "env_logger",
+]
 
 [[package]]
 name = "debugging"
@@ -132,10 +160,11 @@ checksum = "841d1cc9bed7f9236f321df977030373f4a4163ae1a7dbfe1a51a2c1a51d9100"
 name = "html-builder"
 version = "0.1.0"
 dependencies = [
- "debugging",
+ "debugging 0.0.1 (git+https://github.com/a-givertzman/rust-debuging.git?tag=0.1.0)",
  "env_logger",
  "html-escape",
  "log",
+ "sal-core",
  "testing",
 ]
 
@@ -335,6 +364,38 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "dc897dd8d9e8bd1ed8cdad82b5966c3e0ecae09fb1907d58efaa013543185d0a"
 
 [[package]]
+name = "sal-core"
+version = "0.1.0"
+source = "git+https://github.com/a-givertzman/rust-sal-core.git?tag=0.1.0#712382f341e277162ffe4a5e6a65eda5b8b56e82"
+dependencies = [
+ "bincode",
+ "debugging 0.0.1 (git+https://github.com/a-givertzman/rust-debuging.git?tag=0.0.1)",
+ "env_logger",
+ "log",
+ "sal-core-macros",
+ "testing",
+]
+
+[[package]]
+name = "sal-core-macros"
+version = "0.1.0"
+source = "git+https://github.com/a-givertzman/rust-sal-core.git?tag=0.1.0#712382f341e277162ffe4a5e6a65eda5b8b56e82"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
+]
+
+[[package]]
+name = "serde"
+version = "1.0.228"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9a8e94ea7f378bd32cbbd37198a4a91436180c5bb472411e48b5ec2e2124ae9e"
+dependencies = [
+ "serde_core",
+]
+
+[[package]]
 name = "serde_core"
 version = "1.0.228"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -442,6 +503,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e6e4313cd5fcd3dad5cafa179702e2b244f760991f45397d14d4ebf38247da75"
 
 [[package]]
+name = "unty"
+version = "0.0.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6d49784317cd0d1ee7ec5c716dd598ec5b4483ea832a2dced265471cc0f690ae"
+
+[[package]]
 name = "utf8-width"
 version = "0.1.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -458,6 +525,12 @@ name = "valuable"
 version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ba73ea9cf16a25df0c8caa16c51acb937d5712a8429db78a3ee29d5dcacd3a65"
+
+[[package]]
+name = "virtue"
+version = "0.0.18"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "051eb1abcf10076295e815102942cc58f9d5e3b4560e46e53c21e8ff6f3af7b1"
 
 [[package]]
 name = "wasi"
