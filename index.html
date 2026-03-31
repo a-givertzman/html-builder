@@ -62,52 +62,89 @@
 
 <body>
     <header>
-        <h1>📊 Monthly Performance Report</h1>
-        <p>Generated automatically by internal system</p>
+        <h1 class="main-title">📊 Monthly Performance Report</h1>
+        <p class="subtitle">Generated automatically by internal system</p>
 
     </header>
 
     <main>
         <section>
-            <h2 id="section-1-header" class="section-header">OverviewOverview</h2>
-            <h2>Overview</h2>
-            <p>This report summarizes key metrics and system performance for the current period.</p>
-            <br />
-            <p>All values are aggregated and validated against the latest available data.</p>
+            <div id="section-1" class="card">
+                <h2 class="section-header">Overview</h2>
+                This report summarizes key metrics and system performance.<br />All values are aggregated and validated.
+                <div class="note-box"><strong>Note: </strong>
+                    Data may be delayed up to 5 minutes.</div>
+            </div>
 
         </section>
         <section>
-            <div>
-                <h2 class="section-2-header">Key Highlights</h2>
-            </div>
             <h2>Key Highlights</h2>
             <ul class="general-list">
                 <li>System uptime: 99.98%</li>
-                <li>Average response time reduced by 12%</li>
-                <li>No critical incidents reported</li>
+                <li>Latency reduced by 12%</li>
+                <li>
+                    <div class="highlight"><strong>No critical incidents</strong>
+                    </div>
+                </li>
             </ul>
+
+        </section>
+        <section>
+            <h2>Detailed Metrics</h2>
+            <table class="metrics-table">
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Uptime</td>
+                        <td>99.98%</td>
+                    </tr>
+                    <tr>
+                        <td>Latency</td>
+                        <td>120ms</td>
+                    </tr>
+                </tbody>
+            </table>
 
         </section>
         <section>
             <h2>Next Steps</h2>
-            <p>Focus will be placed on improving edge-case handling and further reducing latency.</p>
-            <ul>
+            <p>Focus areas for the next iteration:</p>
+            <ul class="general-list">
                 <li>
-                    <h4 class="list-item">Optimize database queries</h4>
+                    <div>
+                        <h4 class="list-item">Optimize database queries</h4>
+                    </div>
                 </li>
                 <li>
-                    <h4 class="list-item">Extend monitoring coverage</h4>
+                    <div>
+                        <h4 class="list-item">Extend monitoring coverage</h4>
+                    </div>
                 </li>
                 <li>
-                    <h4 class="list-item">Improve alerting system</h4>
+                    <div>
+                        <h4 class="list-item">Improve alerting system</h4>
+                    </div>
                 </li>
             </ul>
+
+        </section>
+        <section>
+            <h2>Quick Feedback</h2>
+            <form class="feedback-form"><label>Your feedback:</label>
+                <br /><textarea class="input"></textarea>
+                <br /><button class="btn">Submit</button>
+            </form>
 
         </section>
 
     </main>
     <footer>
-        <p>© 2026 Internal System • All rights reserved</p>
+        <p class="footer-text">© 2026 Internal System • All rights reserved</p>
 
     </footer>
 
