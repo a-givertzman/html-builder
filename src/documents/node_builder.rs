@@ -1,6 +1,6 @@
 use std::fmt::{Display, Write};
 
-use crate::documents::{Element, ListBuilder, Tag, h1, h2, p};
+use crate::{TableBuilder, documents::{Element, ListBuilder, Tag, h1, h2, p}};
 ///
 /// Implements all possible content
 #[derive(Debug, Default)]
@@ -65,6 +65,16 @@ impl NodeBuilder {
     {
         let list: ListBuilder = build(ListBuilder::new());
         self.content.push_str(&list.build());
+        self
+    }
+    ///
+    /// Добавляем таблицу
+    pub fn table<F>(mut self, build: F) -> Self 
+    where 
+        F: FnOnce(TableBuilder) -> TableBuilder 
+    {
+        let table: TableBuilder = build(TableBuilder::new());
+        self.content.push_str(&table.build());
         self
     }
     ///

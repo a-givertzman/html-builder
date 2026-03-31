@@ -1,6 +1,6 @@
 use std::fmt::Display;
 
-use crate::documents::{Element, ListBuilder, NodeBuilder, Tag};
+use crate::{TableBuilder, documents::{Element, ListBuilder, NodeBuilder, Tag}};
 
 #[derive(Debug, Default)]
 pub struct Section(NodeBuilder);
@@ -53,6 +53,14 @@ impl Section {
         F: FnOnce(ListBuilder) -> ListBuilder 
     {
         Self(self.0.list(build))
+    }
+    ///
+    /// Добавляем таблицу
+    pub fn table<F>(self, build: F) -> Self 
+    where 
+        F: FnOnce(TableBuilder) -> TableBuilder 
+    {
+        Self(self.0.table(build))
     }
     ///
     /// Возвращает Id 

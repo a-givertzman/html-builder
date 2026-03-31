@@ -108,6 +108,14 @@ fn basic() {
                     )
                 )
             )
+            .h2(|el| el.text("Detailed Metrics"))
+            .table(|table| table
+                .class("metrics-table")
+                .header(["Metric", "Value"])
+                .row(["Uptime", "99.98%"])
+                .row(["Latency", "120ms"])
+    
+            )
         )
         // --- SECTION 4 ---
         .section(|section| section
