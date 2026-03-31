@@ -177,6 +177,7 @@ fn main() {
         .title("Monthly Report")
         .style(css)
         .header(|header| header
+            .class("main-header")
             .h1(|el| el
                 .class("main-title")
                 .text("📊 Monthly Performance Report")
@@ -188,6 +189,7 @@ fn main() {
         )
         // --- SECTION 1 ---
         .section(|section| section
+            .class("section-1")
             .el(div(), |el| el
                 .id("section-1")
                 .class("card")
@@ -208,6 +210,7 @@ fn main() {
         )
         // --- SECTION 2 ---
         .section(|section| section
+            .class("section-2")
             .h2(|el| el.text("Key Highlights"))
             .list(|list| list
                 .class("general-list")
@@ -223,29 +226,62 @@ fn main() {
         )
         // --- SECTION 3 ---
         .section(|section| section
+            .class("section-3")
             .h2(|el| el.text("Detailed Metrics"))
             .el(table(), |el| el
                 .class("metrics-table")
                 .el(thead(), |el| el
                     .el(tr(), |el| el
-                        .el(th(), |el| el.text("Metric"))
-                        .el(th(), |el| el.text("Value"))
+                        // Общий заголовок «Система», объединяет 3 столбца
+                        .el(th(), |el| el
+                            .attr(colspan(), "3")
+                            .class("th-center")
+                            .text("System Performance")
+                        )
+                        // Общий заголовок «Пользователи», объединяет 2 столбца
+                        .el(th(), |el| el
+                            .attr(colspan(), "2")
+                            .class("th-center")
+                            .text("User Activity")
+                        )
+                    )
+                    .el(tr(), |el| el
+                        // Конкретные метрики во второй строке
+                        .el(th(), |el| el.text("Uptime (%)"))
+                        .el(th(), |el| el.text("Latency (ms)"))
+                        .el(th(), |el| el.text("Errors"))
+                        .el(th(), |el| el.text("Active Users"))
+                        .el(th(), |el| el.text("New Registrations"))
                     )
                 )
                 .el(tbody(), |el| el
                     .el(tr(), |el| el
-                        .el(td(), |el| el.text("Uptime"))
-                        .el(td(), |el| el.text("99.98%"))
+                        .el(td(), |el| el.text("99.98"))
+                        .el(td(), |el| el.text("120"))
+                        .el(td(), |el| el.text("2"))
+                        .el(td(), |el| el.text("1,450"))
+                        .el(td(), |el| el.text("48"))
                     )
                     .el(tr(), |el| el
-                        .el(td(), |el| el.text("Latency"))
-                        .el(td(), |el| el.text("120ms"))
+                        .el(td(), |el| el.text("99.95"))
+                        .el(td(), |el| el.text("135"))
+                        .el(td(), |el| el.text("5"))
+                        .el(td(), |el| el.text("1,380"))
+                        .el(td(), |el| el.text("32"))
                     )
                 )
             )
         )
         // --- SECTION 4 ---
         .section(|section| section
+            .class("section-4")
+            .el(div(), |div| div
+                .raw(chart::draw())
+            )
+        )
+        // --- SECTION 5 ---
+        .section(|section| section
+            .class("section-5")
             .h2(|el| el.text("Next Steps"))
             .text(|el| el.text("Focus areas for the next iteration:"))
             .list(|list| list
@@ -261,16 +297,19 @@ fn main() {
                 )
             )
         )
-        // --- SECTION 5 (формы + void) ---
+        // --- SECTION 6 (формы + void) ---
         .section(|section| section
+            .class("section-6")
             .h2(|el| el.text("Quick Feedback"))
             .el(form(), |el| el
+                .id("feedback-form")
                 .class("feedback-form")
                 .el(label(), |el| el
                     .text("Your feedback:")
                 )
                 .el(br(), |el| el)
                 .el(textarea(), |el| el
+                    .id("feedback")
                     .class("input")
                 )
                 .el(br(), |el| el)
@@ -281,6 +320,7 @@ fn main() {
             )
         )
         .footer(|footer| footer
+            .class("main-footer")
             .text(|el| el
                 .class("footer-text")
                 .text("© 2026 Internal System • All rights reserved")

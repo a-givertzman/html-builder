@@ -109,30 +109,6 @@ fn basic() {
                 )
             )
         )
-
-        // .section(|section| section
-        //     .class("section-3")
-        //     .h2(|el| el.text("Detailed Metrics"))
-        //     .el(table(), |el| el
-        //         .class("metrics-table")
-        //         .el(thead(), |el| el
-        //             .el(tr(), |el| el
-        //                 .el(th(), |el| el.text("Metric"))
-        //                 .el(th(), |el| el.text("Value"))
-        //             )
-        //         )
-        //         .el(tbody(), |el| el
-        //             .el(tr(), |el| el
-        //                 .el(td(), |el| el.text("Uptime"))
-        //                 .el(td(), |el| el.text("99.98%"))
-        //             )
-        //             .el(tr(), |el| el
-        //                 .el(td(), |el| el.text("Latency"))
-        //                 .el(td(), |el| el.text("120ms"))
-        //             )
-        //         )
-        //     )
-        // )
         // --- SECTION 4 ---
         .section(|section| section
             .class("section-4")
