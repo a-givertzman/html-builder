@@ -43,9 +43,9 @@ fn main() {
             .h2(|el| el.text("Next Steps"))
             .text(|el| el.text("Focus will be placed on improving edge-case handling and further reducing latency."))
             .list(|list| list
-                .el(h4(), |el| el.text("Optimize database queries"))
-                .el(h4(), |el| el.text("Extend monitoring coverage"))
-                .el(h4(), |el| el.text("Improve alerting system"))
+                .el(h4(), |el| el.class("list-item").text("Optimize database queries"))
+                .el(h4(), |el| el.class("list-item").text("Extend monitoring coverage"))
+                .el(h4(), |el| el.class("list-item").text("Improve alerting system"))
             )
         )
         .footer(|footer| footer
