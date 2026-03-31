@@ -135,6 +135,18 @@ li {
 .metrics-table thead {
     background: #f1f5f9;
 }
+.metrics-table thead th {
+    border-right: 1px solid #d1d5db; /* цвет линии как у границ таблицы */
+    border-bottom: 1px solid #d1d5db; /* цвет линии как у границ таблицы */
+    padding-right: 8px;
+    padding-left: 8px;
+}
+
+/* Убираем линию у последней ячейки в строке */
+.metrics-table thead th:last-child {
+    border-right: none;
+}
+
 
 .metrics-table th {
     font-weight: 600;

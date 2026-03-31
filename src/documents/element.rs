@@ -98,7 +98,7 @@ impl Element {
             write!(out, " class=\"{}\"", self.classes).unwrap();
         }
         if !self.attrs.is_empty() {
-            write!(out, " class=\"{}\"", self.attrs).unwrap();
+            write!(out, " {}", self.attrs).unwrap();
         }
         if self.tag.is_void {
             for child in self.child {
