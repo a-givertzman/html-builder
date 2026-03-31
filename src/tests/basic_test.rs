@@ -64,7 +64,16 @@ fn basic() {
         // --- SECTION 3 ---
         .section(|section| section
             .class("section-3")
-            .h2(|el| el.text("Detailed Metrics"))
+            .h2(|el| el.text("Detailed Metrics (Simple table)"))
+            // Таблица с простым заголовком
+            .table(|table| table
+                .class("metrics-table")
+                .header(["Uptime (%)", "Latency (ms)", "Errors", "Active Users", "New Registrations"])
+                .row(["99.98", "120", "2", "1,450", "48"])
+                .row(["99.95", "135", "5", "1,380", "32"])
+            )
+            .h2(|el| el.text("Detailed Metrics (Extended table)"))
+            // Таблица со сложным заголовком вручную
             .el(table(), |el| el
                 .class("metrics-table")
                 .el(thead(), |el| el
@@ -108,18 +117,11 @@ fn basic() {
                     )
                 )
             )
-            .h2(|el| el.text("Detailed Metrics"))
-            .table(|table| table
-                .class("metrics-table")
-                .header(["Metric", "Value"])
-                .row(["Uptime", "99.98%"])
-                .row(["Latency", "120ms"])
-    
-            )
         )
         // --- SECTION 4 ---
         .section(|section| section
             .class("section-4")
+            .h2(|el| el.text("SVG Chart Diagram"))
             .el(div(), |div| div
                 .raw(chart::draw())
             )
