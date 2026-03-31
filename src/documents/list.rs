@@ -67,9 +67,9 @@ impl ListBuilder {
                 Child::Text(t) => t,
                 Child::El(el) => el.build(),
             };
-            write!(out, "  <li>{}</li>\n", text).unwrap();
+            write!(out, "  <li>{}</li>", text).unwrap();
         }
-        write!(out, "</ul>\n").unwrap();
+        write!(out, "</ul>").unwrap();
         out
     }
 }

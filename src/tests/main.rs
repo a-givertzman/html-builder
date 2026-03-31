@@ -124,6 +124,7 @@ fn basic() {
             )
         )
         .build();
+    std::fs::File::create("index.html").unwrap();
     std::fs::write("index.html", html).unwrap();
     log::debug!("{dbg} | Result html stored into 'index.html'");
     log::debug!("{dbg} | All done");

@@ -7,6 +7,7 @@ edition = "2024"
 log = "~0.4"
 env_logger = "~0.11"
 html-escape = "~0.2"
+plotters = "~0.3"
 
 testing = { git = "https://github.com/a-givertzman/rust-testing.git", tag = "0.1.2" }
 debugging = { git = "https://github.com/a-givertzman/rust-debuging.git", tag = "0.1.0" }

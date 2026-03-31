@@ -62,24 +62,6 @@ impl NodeBuilder {
         self.content
     }
 }
-// ///
-// /// Writes escaped html tag
-// fn write_tag<W: Write>(
-//     out: &mut W,
-//     tag: &str,
-//     v: impl Display,
-// ) {
-//     write!(out, "<{}>", tag).unwrap();
-//     write_escaped(out, v);
-//     write!(out, "</{}>\n", tag).unwrap();
-// }
-// ///
-// /// Escapes html input
-// pub(super) fn escape(input: impl Display) -> String {
-//     let mut o = String::new();
-//     write_escaped(&mut o, input);
-//     o
-// }
 ///
 /// Escapes html input
 pub(super) fn write_escaped<W: Write>(o: &mut W, v: impl Display) {
@@ -106,3 +88,21 @@ pub(super) fn write_escaped<W: Write>(o: &mut W, v: impl Display) {
     let mut escaper = Escaper { out: o };
     write!(escaper, "{}", v).unwrap();
 }
+// ///
+// /// Writes escaped html tag
+// fn write_tag<W: Write>(
+//     out: &mut W,
+//     tag: &str,
+//     v: impl Display,
+// ) {
+//     write!(out, "<{}>", tag).unwrap();
+//     write_escaped(out, v);
+//     write!(out, "</{}>", tag).unwrap();
+// }
+// ///
+// /// Escapes html input
+// pub(super) fn escape(input: impl Display) -> String {
+//     let mut o = String::new();
+//     write_escaped(&mut o, input);
+//     o
+// }

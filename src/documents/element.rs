@@ -75,11 +75,10 @@ impl Element {
         }
         if self.tag.is_void {
             for child in self.child {
-                let text = match child {
-                    Child::Text(t) => t,
-                    Child::El(el) => el.build(),
-                };
-                write!(out, "{text}").unwrap();
+                match child {
+                    Child::Text(_) => log::warn!("Element.build | Void tag '{}' can't contains text", self.tag),
+                    Child::El(_) => log::warn!("Element.build | Void tag '{}' can't have children", self.tag),
+                }
             }
             write!(out, "/>").unwrap();
         } else {
@@ -91,7 +90,7 @@ impl Element {
                 };
                 write!(out, "{text}").unwrap();
             }
-            write!(out, "</{}>\n", self.tag).unwrap();
+            write!(out, "</{}>", self.tag).unwrap();
         }
         out
     }

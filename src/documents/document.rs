@@ -35,7 +35,7 @@ impl Document {
     ///
     /// Добавляем css стили
     pub fn style(mut self, css: impl Display) -> Self {
-        w!(self.styles, "{}\n", css);
+        w!(self.styles, "{}", css);
         self
     }
     ///
@@ -45,7 +45,7 @@ impl Document {
         F: FnOnce(Element) -> Element 
     {
         let el: Element = build(Element::new(t));
-        write_escaped(&mut self.content, el.build());
+        write!(self.content, "{}", el.build()).unwrap();
         self
     }
     ///
@@ -55,7 +55,7 @@ impl Document {
         F: FnOnce(Header) -> Header 
     {
         let header: Header = build(Header::new());
-        w!(self.header, "<header>\n{}\n</header>\n", header.build());
+        w!(self.header, "<header>{}</header>", header.build());
         self
     }
     ///
@@ -65,7 +65,7 @@ impl Document {
         F: FnOnce(Section) -> Section 
     {
         let section: Section = build(Section::new());
-        w!(self.content, "<section>\n{}\n</section>\n", section.build());
+        w!(self.content, "<section>{}</section>", section.build());
         self
     }
     ///
@@ -75,28 +75,28 @@ impl Document {
         F: FnOnce(Footer) -> Footer 
     {
         let footer: Footer = build(Footer::new());
-        w!(self.footer, "<footer>\n{}\n</footer>\n", footer.build());
+        w!(self.footer, "<footer>{}</footer>", footer.build());
         self
     }
     ///
     /// Возвращает скомпилированный документ
     pub fn build(self) -> String {
         let mut o = String::with_capacity(2048);
-        w!(&mut o,"<!DOCTYPE html>\n");
-        w!(&mut o,"<html lang=\"en\">\n");
-        w!(&mut o,"<head>\n");
-        w!(&mut o,"\t<meta charset=\"UTF-8\">\n");
-        w!(&mut o,"\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n");
-        w!(&mut o,"\t<link rel=\"icon\" href=\"favicon.ico\" type=\"image/x-icon\">\n");
-        w!(&mut o,"\t<title>{}</title>\n", self.title);
-        w!(&mut o,"\t<style>\n{}\n\t</style>\n", self.styles);
-        w!(&mut o,"</head>\n");
-        w!(&mut o,"<body>\n");
-        w!(&mut o,"{}\n", self.header);
-        w!(&mut o,"\t<main>\n{}\n\t</main>\n", self.content);
-        w!(&mut o,"{}\n", self.footer);
-        w!(&mut o,"</body>\n");
-        w!(&mut o,"</html>\n");
+        w!(&mut o,"<!DOCTYPE html>");
+        w!(&mut o,"<html lang=\"en\">");
+        w!(&mut o,"<head>");
+        w!(&mut o,"<meta charset=\"UTF-8\">");
+        w!(&mut o,"<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">");
+        w!(&mut o,"<link rel=\"icon\" href=\"favicon.ico\" type=\"image/x-icon\">");
+        w!(&mut o,"<title>{}</title>", self.title);
+        w!(&mut o,"<style>{}</style>", self.styles);
+        w!(&mut o,"</head>");
+        w!(&mut o,"<body>");
+        w!(&mut o,"{}", self.header);
+        w!(&mut o,"<main>{}</main>", self.content);
+        w!(&mut o,"{}", self.footer);
+        w!(&mut o,"</body>");
+        w!(&mut o,"</html>");
         o
     }
 }
