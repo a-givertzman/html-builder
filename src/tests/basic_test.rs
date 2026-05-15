@@ -12,6 +12,13 @@ fn basic() {
     log::debug!("{dbg} | css loaded from 'style.css'");
     let translation = vec![
         ("Monthly Report", "Ежемесячный отчет"),
+        ("📊 Monthly Performance Report", "📊 Ежемесячный отчет о результатах"),
+        ("Generated automatically by internal system", "Сгенерировано автоматически внутренней системой"),
+        ("Overview", "Обзор"),
+        ("This report summarizes key metrics and system performance.", "В данном отчете обобщаются ключевые метрики и показатели производительности системы."),
+        ("All values are aggregated and validated.", "Все значения агрегированы и валидированы."),
+        ("Data may be delayed up to 5 minutes.", "Данные могут запаздывать до 5 минут."),
+        ("Note: ", "Примечание: ")
     ].into_iter().map(|(key, val)| (key.to_string(), val.to_string()));
     let translation = Translation::new(translation);
     let html = Document::new()
