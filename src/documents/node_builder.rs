@@ -1,10 +1,11 @@
-use std::fmt::{Display, Write};
+use std::{fmt::{Display, Write}, sync::Arc};
 
-use crate::{TableBuilder, documents::{Element, ListBuilder, Tag, h1, h2, p}};
+use crate::{TableBuilder, Translation, documents::{Element, ListBuilder, Tag, h1, h2, p}};
 ///
 /// Implements all possible content
 #[derive(Debug, Default)]
 pub struct NodeBuilder {
+    locale: Arc<Translation>,
     pub(super) id: String,
     pub(super) classes: String,
     content: String,
@@ -13,6 +14,12 @@ pub struct NodeBuilder {
 impl NodeBuilder {
     pub fn new() -> Self {
         Self::default()
+    }
+    ///
+    /// Добавляем переводы элементу
+    pub fn localize(mut self, t: impl Into<Arc<Translation>>) -> Self {
+        self.locale = t.into();
+        self
     }
     ///
     /// Add class to the Html element
@@ -29,7 +36,9 @@ impl NodeBuilder {
     where 
         F: FnOnce(Element) -> Element 
     {
-        let el: Element = build(Element::new(t));
+        let el = Element::new(t)
+            .localize(self.locale.clone());
+        let el: Element = build(el);
         write!(self.content, "{}", el.build()).unwrap();
         self
     }
@@ -63,7 +72,9 @@ impl NodeBuilder {
     where 
         F: FnOnce(ListBuilder) -> ListBuilder 
     {
-        let list: ListBuilder = build(ListBuilder::new());
+        let list = ListBuilder::new()
+            .localize(self.locale.clone());
+        let list: ListBuilder = build(list);
         self.content.push_str(&list.build());
         self
     }
@@ -73,7 +84,9 @@ impl NodeBuilder {
     where 
         F: FnOnce(TableBuilder) -> TableBuilder 
     {
-        let table: TableBuilder = build(TableBuilder::new());
+        let table = TableBuilder::new()
+            .localize(self.locale.clone());
+        let table: TableBuilder = build(table);
         self.content.push_str(&table.build());
         self
     }
@@ -89,7 +102,6 @@ pub(super) fn write_escaped<W: Write>(o: &mut W, v: impl Display) {
     struct Escaper<'a, W: Write> {
         out: &'a mut W,
     }
-
     impl<W: Write> Write for Escaper<'_, W> {
         fn write_str(&mut self, s: &str) -> std::fmt::Result {
             for c in s.chars() {
@@ -105,7 +117,6 @@ pub(super) fn write_escaped<W: Write>(o: &mut W, v: impl Display) {
             Ok(())
         }
     }
-
     let mut escaper = Escaper { out: o };
     write!(escaper, "{}", v).unwrap();
 }

@@ -1,11 +1,12 @@
-use std::fmt::{Display, Write};
+use std::{fmt::{Display, Write}, sync::Arc};
 
-use crate::{Attribute, documents::{Tag, write_escaped}};
+use crate::{Attribute, Translation, documents::{Tag, write_escaped}};
 
 ///
 /// Atomic Html element builder
 #[derive(Debug)]
 pub struct Element {
+    locale: Arc<Translation>,
     tag: Tag,
     id: String,
     classes: String,
@@ -18,6 +19,7 @@ impl Element {
     /// New Html [Element]
     pub fn new(t: Tag) -> Self {
         Self {
+            locale: Arc::new(Translation::empty()),
             tag: t,
             id: String::new(),
             classes: String::new(),
@@ -35,8 +37,16 @@ impl Element {
             log::warn!("Element.el | Void tag '{}' can't have children", self.tag);
             return self;
         }
-        let el: Element = build(Element::new(t));
+        let el = Element::new(t)
+            .localize(self.locale.clone());
+        let el: Element = build(el);
         self.child.push(Child::El(el));
+        self
+    }
+    ///
+    /// Добавляем переводы элементу
+    pub fn localize(mut self, t: impl Into<Arc<Translation>>) -> Self {
+        self.locale = t.into();
         self
     }
     ///
@@ -61,22 +71,23 @@ impl Element {
         if !self.attrs.is_empty() {
             write!(self.attrs, " ").unwrap();
         }
-    
         if attr.is_flag {
             write!(self.attrs, "{}", attr).unwrap();
         } else {
             write!(self.attrs, "{}=\"", attr).unwrap();
-            write_escaped(&mut self.attrs, value);
+            match attr.name {
+                "title" | "placeholder" | "value" => write_escaped(&mut self.attrs, self.locale.tr(&value)),
+                _ => write_escaped(&mut self.attrs, value),
+            }
             write!(self.attrs, "\"").unwrap();
         }
-    
         self
     }
     ///
     /// Add text to the html element 
     pub fn text(mut self, v: impl Display) -> Self {
         let mut text = String::with_capacity(32);
-        write_escaped(&mut text, v);
+        write_escaped(&mut text, self.locale.tr(&v));
         self.child.push(Child::Text(text));
         self
     }

@@ -3,7 +3,7 @@ use std::fmt::Display;
 ///
 /// Html Element [Attribute]
 pub struct Attribute {
-    name: &'static str,
+    pub name: &'static str,
     pub is_flag: bool, // boolean attribute
 }
 //

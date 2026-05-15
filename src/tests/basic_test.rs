@@ -1,7 +1,7 @@
 use debugging::session::debug_session::{DebugSession, LogLevel};
 use sal_core::dbg::Dbg;
 
-use crate::{colspan, documents::{Document, br, button, div, form, h2, h4, label, strong, table, tbody, td, textarea, th, thead, tr}, img, svg, tests::chart};
+use crate::{Translation, colspan, documents::{Document, br, button, div, form, h2, h4, label, strong, table, tbody, td, textarea, th, thead, tr}, img, svg, tests::chart};
 ///
 /// Testing all basic functioms of the html builder
 #[test]
@@ -10,7 +10,12 @@ fn basic() {
     let css = std::fs::read_to_string("style.css").unwrap();
     let dbg = Dbg::own("basic-test");
     log::debug!("{dbg} | css loaded from 'style.css'");
+    let translation = vec![
+        ("Monthly Report", "Ежемесячный отчет"),
+    ].into_iter().map(|(key, val)| (key.to_string(), val.to_string()));
+    let translation = Translation::new(translation);
     let html = Document::new()
+        .localize(translation)
         .title("Monthly Report")
         .style(css)
         .header(|header| header

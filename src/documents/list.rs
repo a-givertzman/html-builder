@@ -1,10 +1,11 @@
-use std::fmt::{Display, Write};
+use std::{fmt::{Display, Write}, sync::Arc};
 
-use crate::documents::{Element, Tag, write_escaped};
+use crate::{Translation, documents::{Element, Tag, write_escaped}};
 
 ///
 /// Simple Html list
 pub struct ListBuilder {
+    locale: Arc<Translation>,
     id: String,
     classes: String,
     content: Vec<Child>,
@@ -13,10 +14,17 @@ pub struct ListBuilder {
 impl ListBuilder {
     pub fn new() -> Self {
         Self {
+            locale: Arc::new(Translation::empty()),
             id: String::new(),
             classes: String::new(),
             content: vec![],
         }
+    }
+    ///
+    /// Добавляем переводы элементу
+    pub fn localize(mut self, t: impl Into<Arc<Translation>>) -> Self {
+        self.locale = t.into();
+        self
     }
     ///
     /// Set Id to the Html element
@@ -40,14 +48,18 @@ impl ListBuilder {
     where 
         F: FnOnce(Element) -> Element 
     {
-        let el: Element = build(Element::new(t));
+        let el = Element::new(t)
+            .localize(self.locale.clone());
+        let el: Element = build(el);
         self.content.push(Child::El(el));
         self
     }
     ///
     /// Добавляем элемент списка
     pub fn item(mut self, text: impl Display) -> Self {
-        self.content.push(Child::Text(text.to_string()));
+        let mut o = String::with_capacity(32);
+        write_escaped(&mut o, self.locale.tr(&text));
+        self.content.push(Child::Text(o));
         self
     }
     ///

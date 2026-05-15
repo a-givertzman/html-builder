@@ -1,6 +1,6 @@
-use std::fmt::Display;
+use std::{fmt::Display, sync::Arc};
 
-use crate::{TableBuilder, documents::{Element, ListBuilder, NodeBuilder, Tag}};
+use crate::{TableBuilder, Translation, documents::{Element, ListBuilder, NodeBuilder, Tag}};
 
 #[derive(Debug, Default)]
 pub struct Section(NodeBuilder);
@@ -8,6 +8,11 @@ pub struct Section(NodeBuilder);
 impl Section {
     pub fn new() -> Self {
         Self::default()
+    }
+    ///
+    /// Добавляем переводы элементу
+    pub fn localize(self, t: impl Into<Arc<Translation>>) -> Self {
+        Self(self.0.localize(t))
     }
     ///
     /// Add class to the Html element

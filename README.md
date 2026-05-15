@@ -173,7 +173,12 @@ Document
 ```rust
 fn main() {
     let css = std::fs::read_to_string("style.css").unwrap();
+    let translations = vec![
+        ("Monthly Report", "Ежемесячный отчет"),
+    ].into_iter().map(|(key, val)| (key.to_string(), val.to_string()));
+    let translations = Translation::new(translations);
     let html = Document::new()
+        .localize(translations)
         .title("Monthly Report")
         .style(css)
         .header(|header| header

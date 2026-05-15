@@ -1,6 +1,6 @@
-use std::fmt::{Display, Write};
+use std::{fmt::{Display, Write}, sync::Arc};
 
-use crate::documents::{Element, Footer, Header, Section, Tag, write_escaped};
+use crate::{Translation, documents::{Element, Footer, Header, Section, Tag, write_escaped}};
 
 ///
 /// Writes formatted data into a buffer.
@@ -13,6 +13,7 @@ macro_rules! w {
 /// Rendere HTML document
 #[derive(Debug, Default)]
 pub struct Document {
+    locale: Arc<Translation>,
     title: String,
     styles: String,
     header: String,
@@ -25,10 +26,16 @@ impl Document {
         Self::default()
     }
     ///
+    /// Добавляем переводы документу
+    pub fn localize(mut self, t: impl Into<Arc<Translation>>) -> Self {
+        self.locale = t.into();
+        self
+    }
+    ///
     /// Добавляем титул документу
     pub fn title(mut self, v: impl Display) -> Self {
         let mut title = String::with_capacity(32);
-        write_escaped(&mut title, v);
+        write_escaped(&mut title, self.locale.tr(&v));
         self.title = title;
         self
     }
@@ -44,7 +51,9 @@ impl Document {
     where 
         F: FnOnce(Element) -> Element 
     {
-        let el: Element = build(Element::new(t));
+        let el = Element::new(t)
+            .localize(self.locale.clone());
+        let el: Element = build(el);
         write!(self.content, "{}", el.build()).unwrap();
         self
     }
@@ -54,7 +63,9 @@ impl Document {
     where 
         F: FnOnce(Header) -> Header 
     {
-        let header: Header = build(Header::new());
+        let header = Header::new()
+            .localize(self.locale.clone());
+        let header: Header = build(header);
         w!(self.header, "<header");
         if !header.id().is_empty() {
             w!(self.header, " id=\"{}\"", header.id());
@@ -71,7 +82,9 @@ impl Document {
     where 
         F: FnOnce(Section) -> Section 
     {
-        let section: Section = build(Section::new());
+        let section = Section::new()
+            .localize(self.locale.clone());
+        let section: Section = build(section);
         w!(self.content, "<section");
         if !section.id().is_empty() {
             w!(self.content, " id=\"{}\"", section.id());
@@ -88,7 +101,9 @@ impl Document {
     where 
         F: FnOnce(Footer) -> Footer 
     {
-        let footer: Footer = build(Footer::new());
+        let footer = Footer::new()
+            .localize(self.locale.clone());
+        let footer: Footer = build(footer);
         w!(self.footer, "<footer");
         if !footer.id().is_empty() {
             w!(self.footer, " id=\"{}\"", footer.id());
